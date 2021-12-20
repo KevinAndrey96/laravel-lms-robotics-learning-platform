@@ -52,6 +52,6 @@ class CategoriesStoreController extends Controller
             $category->save();
         }
 
-        return back();
+        return redirect('/categories')->with('stocategosuccess', 'Categoría agregada');
     }
 }
