@@ -21,4 +21,8 @@ class Category extends Model
         'icon_url'
     ];
 
+    public function subcategories()
+    {
+        return $this->hasMany(Subcategory::class);
+    }
 }
