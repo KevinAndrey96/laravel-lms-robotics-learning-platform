@@ -21,7 +21,7 @@
                     <input class="form-control" type="text" name="phone" id="phone" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">Seleccione el colegio:</label>
+                    <label for="school_id">Seleccione el colegio:</label>
                     <select class="form-control" name="school_id" id="school_id" required>
                         @foreach($freeSchools as $school)
                             <option value="{{$school->id }}">{{$school->name}}</option>
