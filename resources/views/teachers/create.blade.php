@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input class="form-control" type="password" name="password" id="password">
+                    <input class="form-control" type="password" name="password" id="password" required>
                 </div>
                 <input type="submit" style="width:160px; color: white; margin-top:20px; float:right;" class="btn btn-primary" value="Crear">
             </form>
