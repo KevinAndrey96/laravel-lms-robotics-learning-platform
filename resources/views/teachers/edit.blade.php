@@ -25,8 +25,10 @@
                         @foreach ($schools as $school)
                             @if($user->teacher->school_id == $school->id)
                                 <option value="{{$school->id }}" selected >{{$school->name}}</option>
+                            @else
+                                <option value="{{$school->id }}">{{$school->name}}</option>
                             @endif
-                                <option value="{{$school->id}}">{{$school->name}}</option>
+
                         @endforeach
                     </select>
                 </div>

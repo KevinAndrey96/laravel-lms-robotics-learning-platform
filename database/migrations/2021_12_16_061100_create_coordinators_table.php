@@ -14,6 +14,7 @@ class CreateCoordinatorsTable extends Migration
     public function up()
     {
         Schema::create('coordinators', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('user_id')->unique();
