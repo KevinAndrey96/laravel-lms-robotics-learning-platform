@@ -18,7 +18,10 @@ class StoreProjectsController extends Controller
         $project = new Project();
         $project->name = $request->input('name');
         $project->description = $request->input('description');
-        $project->theme_type = $request->input('theme_type');
+        $project->theme_type = 'project';
+        if (Auth::user()->role == 'Administrator') {
+            $project->theme_type = $request->input('theme_type');
+        }
         $project->icon_url = '';
         $project->is_enable = 0;
         $project->user_id = Auth::user()->id;
@@ -49,7 +52,7 @@ class StoreProjectsController extends Controller
             $project->save();
             unlink(storage_path('app/public/project_images/'.$project->id.'.png'));
 
-            return redirect('/projects')->with('StoreProjectSuccess', 'Proyecto agregado');
+            return redirect('/projects')->with('StoreProjectSuccess', 'Tema agregado');
         }
 
     }
