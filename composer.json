@@ -1,5 +1,5 @@
 {
-    "name": "kevinandrey/stem-robotics-learning-platform",
+    "name": "kevinandrey/lms-robotics-learning-platform",
     "type": "project",
     "description": "Full-stack STEM and robotics learning management platform (LMS & ERP) for primary and secondary schools.",
     "keywords": ["stem", "robotics", "learning-platform", "lms", "laravel", "education"],

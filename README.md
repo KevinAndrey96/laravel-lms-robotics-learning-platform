@@ -1,6 +1,6 @@
-# STEM Robotics Learning Platform
+# LMS Robotics Learning Platform
 
-[![CI Pipeline](https://github.com/KevinAndrey96/stem-robotics-learning-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/KevinAndrey96/stem-robotics-learning-platform/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/KevinAndrey96/lms-robotics-learning-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/KevinAndrey96/lms-robotics-learning-platform/actions/workflows/ci.yml)
 [![PHP Version](https://img.shields.io/badge/PHP-8.0%20%7C%208.1%20%7C%208.2-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/Laravel-8.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
@@ -162,8 +162,8 @@ The platform includes pre-configured learning tracks covering primary and second
 ### 1. Clone & Configure Environment
 
 ```bash
-git clone git@github.com:KevinAndrey96/stem-robotics-learning-platform.git
-cd stem-robotics-learning-platform
+git clone git@github.com:KevinAndrey96/lms-robotics-learning-platform.git
+cd lms-robotics-learning-platform
 
 # Generate local environment file from sanitized template
 cp .env.example .env
