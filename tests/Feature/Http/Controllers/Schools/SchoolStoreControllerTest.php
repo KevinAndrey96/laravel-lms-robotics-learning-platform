@@ -1,52 +1,60 @@
 <?php
 
-namespace Http\Controllers\Schools;
+namespace Tests\Feature\Http\Controllers\Schools;
 
-use App\Http\Controllers\Schools\SchoolStoreController;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\UseCases\Contracts\Schools\StoreSchoolsUseCaseInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
-/**
- * class SchoolStoreControllerTest
- */
 class SchoolStoreControllerTest extends TestCase
 {
-    /**
-     * Schools store path url
-     * @type string
-     */
-    private const PATH_URL = 'schools/store';
-
-    private const IMAGE_PATH = 'tests/Golden_files/test.png';
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
+    public function testStoreSchoolValidationFailsOnEmptyRequest()
     {
-        parent::setUp();
+        $admin = new User([
+            'name' => 'Admin Test',
+            'email' => 'admin@test.com',
+            'phone' => '1234567',
+            'role' => 'Administrator',
+            'is_enable' => 1,
+        ]);
+
+        $response = $this->actingAs($admin)->post('/schools/store', []);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['name', 'address', 'city', 'country', 'icon_url']);
     }
 
-    /**
-     * @return void
-     * @throws GuzzleException
-     */
-    public function testStoreSchool()
+    public function testStoreSchoolWithMockedUseCase()
     {
-        $schoolStoreController = new SchoolStoreController();
-        $request = new Request();
-        $request->name = 'Gimanasion moderno';
-        $request->icon_url = new UploadedFile(
-            self::IMAGE_PATH,
-            'banner-test.jpg',
-            'image/jpeg',
-            null,
-            true
-        );
-        $schoolStoreController->store($request);
+        Storage::fake('public');
+
+        $mockUseCase = $this->createMock(StoreSchoolsUseCaseInterface::class);
+        $mockUseCase->expects($this->once())
+            ->method('handle')
+            ->willReturn(true);
+
+        $this->app->instance(StoreSchoolsUseCaseInterface::class, $mockUseCase);
+
+        $admin = new User([
+            'name' => 'Admin Test',
+            'email' => 'admin@test.com',
+            'phone' => '1234567',
+            'role' => 'Administrator',
+            'is_enable' => 1,
+        ]);
+
+        $file = UploadedFile::fake()->image('school.png');
+
+        $response = $this->actingAs($admin)->post('/schools/store', [
+            'name' => 'Gimnasio Moderno Robot',
+            'address' => 'Calle 100 # 15-20',
+            'city' => 'Bogota',
+            'country' => 'Colombia',
+            'icon_url' => $file,
+        ]);
+
+        $response->assertRedirect('/schools');
+        $response->assertSessionHas('createschoolsuccess');
     }
 }

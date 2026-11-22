@@ -1,66 +1,228 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# STEM Robotics Learning Platform
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![CI Pipeline](https://github.com/KevinAndrey96/stem-robotics-learning-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/KevinAndrey96/stem-robotics-learning-platform/actions/workflows/ci.yml)
+[![PHP Version](https://img.shields.io/badge/PHP-8.0%20%7C%208.1%20%7C%208.2-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
+[![Laravel](https://img.shields.io/badge/Laravel-8.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Docker](https://img.shields.io/badge/Docker-Compose%20Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![RBAC](https://img.shields.io/badge/Security-Spatie%20Permissions-brightgreen?style=flat-square)](https://spatie.be/docs/laravel-permission/)
 
-## About Laravel
+A full-stack Educational Learning Management System (LMS) and Academic ERP platform designed for schools, academies, and institutions teaching robotics, electronics, computational thinking, and STEM disciplines to primary and secondary students.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The platform orchestrates the complete academic lifecycle across multi-tier educational institutions: from school onboarding and coordinator governance, to classroom curriculum assignment, teacher challenge scheduling, student homework submissions (PDF, DOCX, ZIP), project repositories, and gradebook evaluations with automated Excel and PDF reporting.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🏛️ System Architecture
 
-## Learning Laravel
+The platform follows a layered clean architecture pattern, combining Single Responsibility Action Controllers, Domain Use Cases, Contract Interfaces, Eloquent Repositories, and a resilient Media Upload Service:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```mermaid
+flowchart TD
+    subgraph Clients["👥 Institutional Actors"]
+        Admin["Super Administrator\n(Platform & Institution Operations)"]
+        Coord["Pedagogical Coordinator\n(Teachers, Classrooms & Roster)"]
+        Teacher["STEM Instructor\n(Challenges, Syllabi & Grading)"]
+        Student["Enrolled Student\n(Submissions & Projects)"]
+    end
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    subgraph SecurityLayer["🛡️ Security & Access Control"]
+        AuthMdl["Laravel Auth Middleware"]
+        RBAC["Spatie Permission Engine\n(Roles & Granular Permissions)"]
+        StateGuard["Institution State Guards\n(isEnabled, isDeletedSchool)"]
+    end
 
-## Laravel Sponsors
+    subgraph AppLayer["⚙️ Application & Presentation Layer"]
+        Controllers["Single Responsibility Controllers\n(Schools, Classrooms, Homeworks, Projects)"]
+        UseCases["Domain Use Cases\n(StoreSchoolsUseCase, TeacherActions)"]
+        MediaService["MediaUploadService\n(Local Storage + Fault-Tolerant Mirror)"]
+        ExcelService["Maatwebsite Excel Import/Export Engine"]
+    end
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    subgraph DomainLayer["📦 Domain & Persistence Layer"]
+        Repositories["Eloquent Repositories\n(SchoolRepository, TeacherRepository)"]
+        Models["Typed Domain Models\n(School, Classroom, Homework, UploadedHomework)"]
+        DB[(MySQL 8.0 Engine\nInnoDB, Relational Integrity)]
+    end
 
-### Premium Partners
+    Admin --> SecurityLayer
+    Coord --> SecurityLayer
+    Teacher --> SecurityLayer
+    Student --> SecurityLayer
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+    SecurityLayer --> Controllers
+    Controllers --> UseCases
+    Controllers --> MediaService
+    Controllers --> ExcelService
+    UseCases --> Repositories
+    Repositories --> Models
+    Models --> DB
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🗄️ Relational Domain Model (ERD)
 
-## Code of Conduct
+```mermaid
+erDiagram
+    USERS ||--o{ MODEL_HAS_ROLES : has
+    ROLES ||--o{ MODEL_HAS_ROLES : assigned_to
+    ROLES ||--o{ ROLE_HAS_PERMISSIONS : contains
+    PERMISSIONS ||--o{ ROLE_HAS_PERMISSIONS : granted
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    SCHOOLS ||--o{ COORDINATORS : assigns
+    SCHOOLS ||--o{ TEACHERS : employs
+    SCHOOLS ||--o{ CLASSROOMS : operates
+    SCHOOLS ||--o{ STUDENTS : enrolls
 
-## Security Vulnerabilities
+    USERS ||--|| COORDINATORS : identity
+    USERS ||--o{ TEACHERS : identity
+    USERS ||--o{ STUDENTS : identity
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    TEACHERS ||--o{ CLASSROOMS : instructs
+    CLASSROOMS ||--o{ STUDENTS : contains
+    CLASSROOMS ||--o{ HOMEWORK : assigns
+    CLASSROOMS ||--o{ SYLLABI : schedules
+    CLASSROOMS ||--o{ ACADEMIC_HISTORIES : tracks
 
-## License
+    CATEGORIES ||--o{ SUBCATEGORIES : groups
+    SUBCATEGORIES ||--o{ PROJECTS : provides
+    PROJECTS ||--o{ SYLLABI : includes
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    HOMEWORK ||--o{ UPLOADED_HOMEWORKS : receives
+    STUDENTS ||--o{ UPLOADED_HOMEWORKS : submits
+    STUDENTS ||--o{ ACADEMIC_HISTORIES : achieves
+```
+
+---
+
+## 👥 Multi-Tier Role & Permission Matrix (RBAC)
+
+The system enforces strict Role-Based Access Control powered by `spatie/laravel-permission` and custom institutional security middlewares:
+
+| Capability / Module | Administrator | Coordinator | Teacher | Student |
+| :--- | :---: | :---: | :---: | :---: |
+| School Management (Create, Edit, Soft Delete, Enable/Disable) | ✅ Full | ❌ | ❌ | ❌ |
+| Pedagogical Coordinators Directory & Assignment | ✅ Full | ❌ | ❌ | ❌ |
+| Curricular STEM Categories & Subcategories | ✅ Full | ❌ | ❌ | ❌ |
+| Teachers & Instructors Onboarding | ❌ | ✅ Full | ❌ | ❌ |
+| Classrooms Creation, Coding & Capacity Management | ❌ | ✅ Full | 👁️ View | ❌ |
+| Student Enrollment & Classroom Transfers | ❌ | ✅ Full | 👁️ View | ❌ |
+| Curricular Syllabus Planning & Project Association | ✅ Full | 👁️ View | ✅ Manage | 👁️ View |
+| Challenge Assignment (Homework creation, deadlines) | ❌ | ❌ | ✅ Full | ❌ |
+| Deliveries & Submissions (PDF, DOCX, ZIP file upload) | ❌ | ❌ | ❌ | ✅ Submit |
+| Evaluation, Scoring & Academic History Feedback | ❌ | ❌ | ✅ Grade | 👁️ View |
+| Bulk Student/Teacher Import and Export (Excel) | ✅ Full | ✅ Full | ❌ | ❌ |
+
+---
+
+## 🔬 STEM Curricular Tracks & Educational Modules
+
+The platform includes pre-configured learning tracks covering primary and secondary school robotics education:
+
+| Track / Category | Core Disciplines | Practical Classroom Focus |
+| :--- | :--- | :--- |
+| **Robótica y Mecatrónica** | Kinematics, Gears, Servomotors, Actuators | Articulated robot arms, chassis design, high-speed line followers |
+| **Programación y Algoritmia** | Visual Blocks, Scratch, Python Embedded | Algorithmic logic, control loops, obstacle evasion code |
+| **Electrónica y Circuitos** | Breadboards, LEDs, Microcontrollers | Arduino sensor reading, Micro:bit wearable indicators, acoustic alerts |
+| **Diseño e Impresión 3D** | Volumetric Modeling, Tinkercad, Prototyping | Custom structural joints, wheel hubs, sensor mounting brackets |
+| **IA e IoT Escolar** | Basic Machine Vision, Smart Classrooms | Environmental telemetry (temp/humidity), color recognition triggers |
+
+---
+
+## ⚡ Key Capabilities & Technical Highlights
+
+### 1. Pedagogical & Classroom Life Cycle
+- **Institutional Governance**: Multi-school tenancy allowing central administrators to onboard regional schools and appoint coordinators.
+- **Roster Enrollment & Transfers**: Automated student registration with classroom transfer workflows preserving historic evaluations.
+- **Dynamic Syllabi**: Assignment of project-based curriculum units to specific classroom sections with student interactive access.
+
+### 2. Challenge & Homework Submissions
+- **Deadlines & Status Machine**: Assignments track delivery dates with states (`notUploaded`, `send`, `scored`).
+- **File Validation & Storage**: Multi-format submissions (PDF, DOCX, ZIP, images) stored through `MediaUploadService`.
+- **Gradebook & History**: Direct scoring by instructors updating `academic_histories` records for end-of-term evaluations.
+
+### 3. Resilient Media Architecture (`MediaUploadService`)
+- Replaces legacy hardcoded HTTP upload calls with a unified, clean service layer.
+- Ensures all institutional logos, category icons, project guides, and student deliverables are saved to local public storage with deterministic naming.
+- Features optional non-blocking remote mirroring that gracefully handles network latency without failing local transactions.
+
+### 4. Bulk Data Migration & Reporting
+- Integrated **Maatwebsite Excel** engine (`phpoffice/phpspreadsheet`) for mass onboarding of students and teachers.
+- Print-ready PDF report generation using **DomPDF**.
+
+---
+
+## 🚀 Quickstart with Docker Compose
+
+### Prerequisites
+- Docker (version 20.10 or higher)
+- Docker Compose (v2)
+
+### 1. Clone & Configure Environment
+
+```bash
+git clone git@github.com:KevinAndrey96/stem-robotics-learning-platform.git
+cd stem-robotics-learning-platform
+
+# Generate local environment file from sanitized template
+cp .env.example .env
+```
+
+### 2. Start Services
+
+```bash
+docker compose up -d
+```
+
+This starts:
+- **Web Application**: Nginx on `http://localhost:8080`
+- **Application Runtime**: PHP 8.1 FPM container
+- **Database Engine**: MySQL 8.0 on `localhost:3306` with auto-initialized schema and seed data
+- **Caching & Sessions**: Redis 7.0 on `localhost:6379`
+- **Mail Testing Sandbox**: Mailpit Web UI on `http://localhost:8025` (SMTP port `1025`)
+
+### 3. Seed Accounts & Credentials
+
+The seed dataset provides pre-configured credentials for every role in the platform:
+
+| Role | Email | Password | Assigned Context |
+| :--- | :--- | :--- | :--- |
+| **Super Administrator** | `admin@admin.com` | `password` | Global platform administration |
+| **Coordinator** | `miel@gmail.com` | `password` | Colegio Claretiano de Bosa |
+| **Coordinator** | `claretiano@gmail.com` | `password` | Colegio Mayor de Mazuera |
+| **Teacher** | `carlos@gmail.com` | `password` | Instructor (Robótica Móvil 607) |
+| **Teacher** | `davidca@gmail.com` | `password` | Instructor (Robótica Industrial 802) |
+| **Teacher** | `claudia@gmail.com` | `password` | Instructor (Domótica Infantil 305) |
+| **Student** | `student@student.com` | `password` | Student enrolled in Robótica 607 |
+| **Student** | `fernandohu@gmail.com` | `password` | Student enrolled in Robótica 607 |
+
+---
+
+## 🧪 Automated Testing & Verification
+
+Run automated linting, test suite, and database integrity checks:
+
+```bash
+# Verify database schema integrity and table records count
+docker compose exec app php database/verify_database.php
+
+# Run unit and feature tests
+docker compose exec app php artisan test
+```
+
+Using the included `Makefile`:
+
+```bash
+make up        # Start all containers in background
+make down      # Stop and preserve container state
+make test      # Run full PHPUnit test suite
+make verify    # Execute database verification script
+make bash      # Open shell in PHP-FPM application container
+```
+
+---
+
+## 📄 License
+
+This software is released under the **MIT License**.
