@@ -30,8 +30,8 @@ class UpdateProjectsController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $path = $this->mediaService->upload($request->file('image'), 'project_images', $project->id . '.png');
-            $project->icon_url = '/' . ltrim($path, '/');
+            $path = $this->mediaService->upload($request->file('image'), 'project_images', $project->id.'.png');
+            $project->icon_url = '/'.ltrim($path, '/');
         }
 
         $project->save();

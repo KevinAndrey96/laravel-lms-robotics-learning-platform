@@ -13,12 +13,12 @@ class UpdatePasswordUsersController extends Controller
     public function updatePassword(Request $request)
     {
         $fields = [
-            'oldPass'=>'required|string',
-            'newPass1'=>'required|string',
-            'newPass2'=>'required|string',
+            'oldPass' => 'required|string',
+            'newPass1' => 'required|string',
+            'newPass2' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $user = User::find(Auth::user()->id);
@@ -34,6 +34,6 @@ class UpdatePasswordUsersController extends Controller
             }
         }
 
-        return back()->with('failChange','No se pudo cambiar la contraseña');
+        return back()->with('failChange', 'No se pudo cambiar la contraseña');
     }
 }

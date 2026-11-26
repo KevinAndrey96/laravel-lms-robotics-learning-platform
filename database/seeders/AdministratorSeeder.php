@@ -16,7 +16,7 @@ class AdministratorSeeder extends Seeder
     {
         $user = new User();
         $user->name = 'Administrador';
-        $user->email = 'admin@admin.com';
+        $user->email = 'admin@example.com';
         $user->phone = '32423423';
         $user->role = 'Administrator';
         $user->is_enable = 1;

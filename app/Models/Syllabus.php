@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $classroom_id
  * @property mixed $project_id
+ *
  * @method static where(string $string, mixed $input)
  */
 class Syllabus extends Model

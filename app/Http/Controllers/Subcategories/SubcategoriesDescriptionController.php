@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Subcategories;
 
 use App\Http\Controllers\Controller;
 use App\Models\Subcategory;
-use Illuminate\Http\Request;
 
 class SubcategoriesDescriptionController extends Controller
 {

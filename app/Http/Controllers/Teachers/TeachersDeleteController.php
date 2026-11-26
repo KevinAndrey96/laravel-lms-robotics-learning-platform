@@ -21,7 +21,6 @@ class TeachersDeleteController extends Controller
             $request->input('user_id')
         );
 
-        return back()->with('deleteteachersuccess','Profesor eliminado');
-
+        return back()->with('deleteteachersuccess', 'Profesor eliminado');
     }
 }

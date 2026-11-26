@@ -3,7 +3,6 @@
 /**
  * Automated Database & Entity Verification Script for CI and Local Dev.
  */
-
 $host = getenv('DB_HOST') ?: '127.0.0.1';
 $port = getenv('DB_PORT') ?: '3306';
 $database = getenv('DB_DATABASE') ?: 'robotics_learning_db';
@@ -19,7 +18,7 @@ try {
     ]);
     echo "[OK] Connected to MySQL successfully.\n";
 } catch (PDOException $e) {
-    echo "[ERROR] Database connection failed: " . $e->getMessage() . "\n";
+    echo '[ERROR] Database connection failed: '.$e->getMessage()."\n";
     exit(1);
 }
 
@@ -51,11 +50,11 @@ foreach ($tables as $table) {
     }
 }
 
-if (!empty($missingTables)) {
-    echo "[FAIL] Missing required tables: " . implode(', ', $missingTables) . "\n";
+if (! empty($missingTables)) {
+    echo '[FAIL] Missing required tables: '.implode(', ', $missingTables)."\n";
     exit(1);
 }
-echo "[OK] All " . count($tables) . " required schema tables exist.\n";
+echo '[OK] All '.count($tables)." required schema tables exist.\n";
 
 // Entity counts verification
 $checks = [

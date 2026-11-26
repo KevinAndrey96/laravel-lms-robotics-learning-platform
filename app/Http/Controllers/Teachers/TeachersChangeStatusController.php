@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Teachers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Teacher;
-use App\Models\User;
 use App\UseCases\Contracts\Teachers\ChangeStatusTeachersUseCaseInterface;
 use Illuminate\Http\Request;
 

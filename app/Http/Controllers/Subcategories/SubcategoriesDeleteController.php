@@ -11,6 +11,7 @@ class SubcategoriesDeleteController extends Controller
     public function delete(Request $request)
     {
         Subcategory::destroy($request->input('subcategory_id'));
+
         return back()->with('delesubcasuccess', 'Subcategoría eliminada');
     }
 }

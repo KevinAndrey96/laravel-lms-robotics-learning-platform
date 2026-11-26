@@ -14,15 +14,16 @@ class TeachersUpdateController extends Controller
     {
         $this->updateTeachersUseCase = $updateTeachersUseCase;
     }
+
     public function update(Request $request)
     {
         $fields = [
-            'name'=>'required|string',
-            'email'=>'required|string|email|max:255',
-            'phone'=>'required|string',
+            'name' => 'required|string',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $this->updateTeachersUseCase->handle(
@@ -32,6 +33,7 @@ class TeachersUpdateController extends Controller
             $request->input('password'),
             $request->input('user_id'),
         );
+
         return redirect('/teachers')->with('updateachsuccess', 'Profesor modificado');
     }
 }

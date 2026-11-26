@@ -34,11 +34,11 @@ class SubcategoriesUpdateController extends Controller
         $subcategory->description = $request->input('description');
 
         if ($request->hasFile('icon_url')) {
-            $subcategory->icon_url = $this->mediaService->upload($request->file('icon_url'), 'subcategory_images', $subcategory->id . '.png');
+            $subcategory->icon_url = $this->mediaService->upload($request->file('icon_url'), 'subcategory_images', $subcategory->id.'.png');
         }
 
         $subcategory->save();
 
-        return redirect('/subcategories/' . $subcategory->category_id)->with('updasubcasuccess', 'Subcategoría modificada');
+        return redirect('/subcategories/'.$subcategory->category_id)->with('updasubcasuccess', 'Subcategoría modificada');
     }
 }

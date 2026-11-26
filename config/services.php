@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'media' => [
+        'remote_upload_endpoint' => env('REMOTE_UPLOAD_ENDPOINT'),
+    ],
+
 ];

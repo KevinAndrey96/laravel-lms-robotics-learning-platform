@@ -18,13 +18,13 @@ class CoordinatorsUpdateController extends Controller
         }
         */
         $fields = [
-            'name'=>'required|string',
-            'email'=>'required|string|email|max:255',
-            'phone'=>'required|string',
-            'school_id'=>'required|string',
+            'name' => 'required|string',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string',
+            'school_id' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $user = User::find($request->input('user_id'));

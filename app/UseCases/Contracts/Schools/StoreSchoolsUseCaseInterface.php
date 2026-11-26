@@ -2,7 +2,6 @@
 
 namespace App\UseCases\Contracts\Schools;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 interface StoreSchoolsUseCaseInterface

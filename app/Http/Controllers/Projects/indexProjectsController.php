@@ -24,6 +24,6 @@ class indexProjectsController extends Controller
         }
         $projects = Project::where('user_id', Auth::user()->id)->get();
 
-        return view('projects.index', compact('projects','id'));
+        return view('projects.index', compact('projects', 'id'));
     }
 }

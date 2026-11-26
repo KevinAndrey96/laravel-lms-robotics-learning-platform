@@ -38,10 +38,10 @@ class SubcategoriesStoreController extends Controller
         $subcategory->save();
 
         if ($request->hasFile('icon_url')) {
-            $subcategory->icon_url = $this->mediaService->upload($request->file('icon_url'), 'subcategory_images', $subcategory->id . '.png');
+            $subcategory->icon_url = $this->mediaService->upload($request->file('icon_url'), 'subcategory_images', $subcategory->id.'.png');
             $subcategory->save();
         }
 
-        return redirect('/subcategories/' . $subcategory->category_id)->with('storesubcasuccess', 'Subcategoría agregada');
+        return redirect('/subcategories/'.$subcategory->category_id)->with('storesubcasuccess', 'Subcategoría agregada');
     }
 }

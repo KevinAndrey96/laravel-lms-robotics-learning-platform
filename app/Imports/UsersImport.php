@@ -17,8 +17,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class UsersImport implements ToModel, WithStartRow
 {
     /**
-     * @param array $row
-     *
+     * @param  array  $row
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function startRow(): int
@@ -99,7 +98,7 @@ class UsersImport implements ToModel, WithStartRow
                     }
                 }
             }
-        } catch (Exception $e){
+        } catch (Exception $e) {
             echo 'Excepción capturada: ',  $e->getMessage(), "\n";
         }
     }

@@ -18,9 +18,9 @@ class ClassroomsDeleteController extends Controller
     public function delete(Request $request)
     {
         $this->deleteClassroomsUseCase->handle(
-          $request->input('classroom_id')
+            $request->input('classroom_id')
         );
 
-        return redirect('/classrooms')->with('deleclasssuccess','Aula eliminada');
+        return redirect('/classrooms')->with('deleclasssuccess', 'Aula eliminada');
     }
 }

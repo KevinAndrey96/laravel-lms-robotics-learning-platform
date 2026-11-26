@@ -59,16 +59,16 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- admin / admin: $2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi ('password')
 -- -----------------------------------------------------------------------------
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `role`, `is_enable`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Super Administrator', 'admin@admin.com', '3101234567', 'Administrator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(2, 'Coordinadora Miel Claretiano', 'miel@gmail.com', '3119876543', 'Coordinator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(3, 'Coordinador Mazuera', 'claretiano@gmail.com', '3124567890', 'Coordinator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(4, 'Profesor Carlos Robótica', 'carlos@gmail.com', '3131112233', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(5, 'Profesor David Electrónica', 'davidca@gmail.com', '3142223344', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(6, 'Profesora Claudia STEM', 'claudia@gmail.com', '3153334455', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(7, 'Profesor Diego Domótica', 'diegofo@gmail.com', '3164445566', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(8, 'Andrea Ospina (Estudiante)', 'student@student.com', '3175556677', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(9, 'Fernando Hurtado (Estudiante)', 'fernandohu@gmail.com', '3186667788', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
-(10, 'Diana Guzmán (Estudiante)', 'dianagu@gmail.com', '3197778899', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW());
+(1, 'Super Administrator', 'admin@example.com', '3101234567', 'Administrator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(2, 'Coordinadora Miel Claretiano', 'miel@example.com', '3119876543', 'Coordinator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(3, 'Coordinador Mazuera', 'claretiano@example.com', '3124567890', 'Coordinator', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(4, 'Profesor Carlos Robótica', 'carlos@example.com', '3131112233', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(5, 'Profesor David Electrónica', 'davidca@example.com', '3142223344', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(6, 'Profesora Claudia STEM', 'claudia@example.com', '3153334455', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(7, 'Profesor Diego Domótica', 'diegofo@example.com', '3164445566', 'Teacher', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(8, 'Andrea Ospina (Estudiante)', 'student@example.com', '3175556677', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(9, 'Fernando Hurtado (Estudiante)', 'fernandohu@example.com', '3186667788', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW()),
+(10, 'Diana Guzmán (Estudiante)', 'dianagu@example.com', '3197778899', 'Student', 1, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NOW(), NOW());
 
 -- Model has roles
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES

@@ -36,7 +36,7 @@ class CategoriesStoreController extends Controller
         $category->save();
 
         if ($request->hasFile('icon_url')) {
-            $category->icon_url = $this->mediaService->upload($request->file('icon_url'), 'category_images', $category->id . '.png');
+            $category->icon_url = $this->mediaService->upload($request->file('icon_url'), 'category_images', $category->id.'.png');
             $category->save();
         }
 

@@ -15,7 +15,7 @@ class Coordinator extends Model
 
     protected $fillable = [
         'user_id',
-        'school_id'
+        'school_id',
     ];
 
     public function user()
@@ -27,6 +27,4 @@ class Coordinator extends Model
     {
         return $this->belongsTo(School::class);
     }
-
-
 }

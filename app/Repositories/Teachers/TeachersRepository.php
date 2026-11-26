@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Teachers;
 
-
 use App\Models\Teacher;
 use App\Models\User;
 use App\Repositories\Contracts\Teachers\TeachersRepositoryInterface;
@@ -10,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeachersRepository implements TeachersRepositoryInterface
 {
-    public function saveTeacher(User $user) : bool
+    public function saveTeacher(User $user): bool
     {
         $coordinator = User::find(Auth::user()->id);
         $user->save();
@@ -19,6 +18,7 @@ class TeachersRepository implements TeachersRepositoryInterface
         $teacher->user_id = $user->id;
         $teacher->save();
         $user->assignRole('Teacher');
+
         return true;
     }
 
@@ -27,6 +27,7 @@ class TeachersRepository implements TeachersRepositoryInterface
         $user = User::find($id);
         $user->is_enable = $status;
         $user->save();
+
         return true;
     }
 
@@ -35,10 +36,10 @@ class TeachersRepository implements TeachersRepositoryInterface
         $coordinator = User::find(Auth::user()->id);
         $user = User::find($user_id);
         $user->name = $name;
-        $user->email= $email;
+        $user->email = $email;
         $user->phone = $phone;
         $user->teacher->school_id = $coordinator->coordinator->school_id;
-        if(!is_null($password)) {
+        if (! is_null($password)) {
             $user->password = bcrypt($password);
         }
         $user->save();

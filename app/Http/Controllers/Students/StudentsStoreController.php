@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
-use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,20 +13,19 @@ class StudentsStoreController extends Controller
     public function store(Request $request)
     {
         //return $request;
-        $foreignUser = User::where('email','=', $request->input('email'))->first();
+        $foreignUser = User::where('email', '=', $request->input('email'))->first();
         if (isset($foreignUser)) {
-
             return back()->with('existingEmail', 'El correo insertado ya existe');
         }
         $fields = [
-            'name'=>'required|string',
-            'email'=>'required|string|email|max:255',
-            'phone'=>'required|string',
-            'classroom_id'=>'required|string',
-            'password'=>'required|string'
+            'name' => 'required|string',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string',
+            'classroom_id' => 'required|string',
+            'password' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $user = new User();

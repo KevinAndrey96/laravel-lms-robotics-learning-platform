@@ -20,7 +20,7 @@ class SchoolRepository implements SchoolRepositoryInterface
     {
         $school->save();
         if ($icon) {
-            $school->icon_url = $this->mediaService->upload($icon, 'school_logos', $school->id . '.png');
+            $school->icon_url = $this->mediaService->upload($icon, 'school_logos', $school->id.'.png');
             $school->save();
         }
     }

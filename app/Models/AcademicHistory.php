@@ -17,7 +17,7 @@ class AcademicHistory extends Model
     protected $fillable = [
         'user_id',
         'classroom_id',
-        'totalScore'
+        'totalScore',
     ];
 
     public function user()
@@ -29,7 +29,4 @@ class AcademicHistory extends Model
     {
         return $this->belongsTo(Classroom::class);
     }
-
-
-
 }

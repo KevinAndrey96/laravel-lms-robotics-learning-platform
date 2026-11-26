@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property mixed|string $role
  * @property mixed|string $password
  * @property mixed $id
+ *
  * @method static find(int $id)
  * @method static where(string $string, string $string1, string $string2)
  * @method static findOrFail($id)
@@ -65,8 +64,6 @@ class User extends Authenticatable
     /**
      * @var mixed|string
      */
-
-
     public function coordinator(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Coordinator::class);
@@ -97,5 +94,4 @@ class User extends Authenticatable
         return $this->hasMany(AcademicHistory::class);
     }
     */
-
 }

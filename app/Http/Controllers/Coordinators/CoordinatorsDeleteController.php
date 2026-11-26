@@ -13,6 +13,6 @@ class CoordinatorsDeleteController extends Controller
         $user = User::find($request->input('user_id'));
         $user->delete();
 
-        return redirect('/coordinators')->with('deletecoordinatorsuccess','Coordinador eliminado');
+        return redirect('/coordinators')->with('deletecoordinatorsuccess', 'Coordinador eliminado');
     }
 }

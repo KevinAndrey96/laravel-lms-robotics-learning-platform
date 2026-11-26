@@ -22,16 +22,15 @@ class ClassroomsStoreController extends Controller
     {
         $classroom = Classroom::where('code', '=', $request->input('code'))->first();
         if (isset($classroom)) {
-
             return back()->with('existingClassroom', 'Código insertado ya esta en uso');
         }
         $fields = [
-            'name'=>'required|string',
-            'code'=>'required|string',
-            'user_id'=>'required|string'
+            'name' => 'required|string',
+            'code' => 'required|string',
+            'user_id' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $classroom = new Classroom();
@@ -41,7 +40,8 @@ class ClassroomsStoreController extends Controller
         $teacher = Teacher::where('user_id', '=', $request->input('user_id'))->first();
         $classroom->school_id = $teacher->school_id;
         $classroom->save();
-        return redirect('/classrooms')->with('storeclasssuccess','Aula agregada');
+
+        return redirect('/classrooms')->with('storeclasssuccess', 'Aula agregada');
         /*
         $this->storeClassroomsUseCase->handle(
             $request->input('name'),

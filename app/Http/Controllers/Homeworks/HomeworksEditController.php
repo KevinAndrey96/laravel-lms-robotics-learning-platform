@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Homeworks;
 
 use App\Http\Controllers\Controller;
 use App\Models\Homework;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeworksEditController extends Controller

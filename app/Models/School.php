@@ -35,9 +35,6 @@ class School extends Model
         'is_deleted',
     ];
 
-    /**
-     * @return HasOne
-     */
     public function coordinator(): HasOne
     {
         return $this->hasOne(Coordinator::class);
@@ -52,6 +49,4 @@ class School extends Model
     {
         return $this->hasMany(Student::class);
     }
-
 }
-

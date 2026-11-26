@@ -17,7 +17,7 @@ class StudentSeeder extends Seeder
     {
         $user = new User();
         $user->name = 'Andrea Ospina';
-        $user->email = 'student@student.com';
+        $user->email = 'student@example.com';
         $user->phone = '5674314';
         $user->is_enable = 1;
         $user->role = 'Student';
@@ -32,7 +32,7 @@ class StudentSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Fernando Hurtado';
-        $user->email = 'fernandohu@gmail.com';
+        $user->email = 'fernandohu@example.com';
         $user->phone = '4672356';
         $user->is_enable = 1;
         $user->role = 'Student';
@@ -47,7 +47,7 @@ class StudentSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Diana Guzman';
-        $user->email = 'dianagu@gmail.com';
+        $user->email = 'dianagu@example.com';
         $user->phone = '6782397';
         $user->is_enable = 1;
         $user->role = 'Student';
@@ -62,7 +62,7 @@ class StudentSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Marcos Portilla';
-        $user->email = 'marcospo@gmail.com';
+        $user->email = 'marcospo@example.com';
         $user->phone = '5688346';
         $user->is_enable = 1;
         $user->role = 'Student';

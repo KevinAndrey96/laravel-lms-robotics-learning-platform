@@ -34,7 +34,7 @@ class CategoriesUpdateController extends Controller
         $category->description = $request->input('description');
 
         if ($request->hasFile('icon_url')) {
-            $category->icon_url = $this->mediaService->upload($request->file('icon_url'), 'category_images', $category->id . '.png');
+            $category->icon_url = $this->mediaService->upload($request->file('icon_url'), 'category_images', $category->id.'.png');
         }
 
         $category->save();

@@ -7,7 +7,6 @@ use App\Models\AcademicHistory;
 use App\Models\Homework;
 use App\Models\Student;
 use App\Models\Uploaded_homework;
-use Illuminate\Http\Request;
 
 class ClassroomsRefreshController extends Controller
 {
@@ -16,10 +15,10 @@ class ClassroomsRefreshController extends Controller
         $students = Student::where('classroom_id', $id)->get();
 
         foreach ($students as $student) {
-            $upHomeworks = Uploaded_homework::where('user_id',$student->user->id)->get();
+            $upHomeworks = Uploaded_homework::where('user_id', $student->user->id)->get();
             $totalScore = 0;
             foreach ($upHomeworks as $upHomework) {
-                $totalScore += ($upHomework->score)*($upHomework->homework->percent/100);
+                $totalScore += ($upHomework->score) * ($upHomework->homework->percent / 100);
             }
             $academicHistory = new AcademicHistory();
             $academicHistory->user_id = $student->user->id;

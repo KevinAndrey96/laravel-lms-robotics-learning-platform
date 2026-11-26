@@ -1,86 +1,93 @@
-name: CI Pipeline
+name: CI
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [main]
   pull_request:
-    branches: [ master, main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  php-lint:
-    name: PHP Syntax & Lint (${{ matrix.php }})
+  tests:
+    name: Pint y pruebas (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        php: ['8.0', '8.1', '8.2']
       fail-fast: false
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      matrix:
+        php: ['8.0', '8.1']
 
-      - name: Setup PHP Environment
-        uses: shivammathur/setup-php@v2
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: robotics_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: robotics_test
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, bcmath, gd, zip
           coverage: none
 
-      - name: Validate Composer Configuration
-        run: composer validate --no-check-all --no-check-lock
+      - run: composer validate --strict
 
-      - name: Syntax Linting (PHP Lint)
-        run: |
-          find app database routes tests -type f -name "*.php" -print0 | xargs -0 -n 1 -P 4 php -l
-
-  database-verification:
-    name: Database Schema & Seeds Verification (MySQL 8.0)
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root_secret
-          MYSQL_DATABASE: robotics_learning_db
-          MYSQL_USER: robotics_user
-          MYSQL_PASSWORD: robotics_secret
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup PHP Environment
-        uses: shivammathur/setup-php@v2
+      - uses: actions/cache@v4
         with:
-          php-version: '8.1'
-          extensions: pdo_mysql
-          coverage: none
+          path: ~/.composer/cache
+          key: composer-${{ matrix.php }}-${{ hashFiles('composer.lock') }}
 
-      - name: Initialize DDL Schema
+      - run: composer install --no-interaction --no-progress --prefer-dist
+
+      - run: vendor/bin/pint --test
+
+      - name: Migraciones y semillas
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot_secret robotics_learning_db < database/schema.sql
+          cp .env.example .env
+          php artisan key:generate
+          php artisan migrate --seed --force
 
-      - name: Populate Seed Dataset
+      - run: vendor/bin/phpunit
+
+      - name: Esquema SQL de demostración
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot_secret robotics_learning_db < database/seeds.sql
+          mysql -h 127.0.0.1 -uroot -proot -e 'CREATE DATABASE robotics_demo'
+          mysql -h 127.0.0.1 -uroot -proot robotics_demo < database/schema.sql
+          mysql -h 127.0.0.1 -uroot -proot robotics_demo < database/seeds.sql
+          DB_DATABASE=robotics_demo php database/verify_database.php
 
-      - name: Verify Schema Integrity & Record Constraints
-        env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: robotics_learning_db
-          DB_USERNAME: root
-          DB_PASSWORD: root_secret
-        run: |
-          php database/verify_database.php
-
-  docker-validation:
-    name: Docker Compose Validation
+  docker:
+    name: Imagen Docker
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Validate Docker Compose Configuration
-        run: docker compose config
+      - run: docker compose config --quiet
+
+      - run: docker build -f docker/php/Dockerfile -t robotics-learning-platform .
+
+      - name: Verificar PHP y extensiones de la imagen
+        run: docker run --rm robotics-learning-platform php -m | grep -E '^(pdo_mysql|redis|gd|zip)$'

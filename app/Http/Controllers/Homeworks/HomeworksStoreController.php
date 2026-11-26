@@ -13,23 +13,24 @@ class HomeworksStoreController extends Controller
     public function store(Request $request)
     {
         $fields = [
-            'title'=>'required|string',
-            'percent'=>'required|string',
-            'description'=>'required|string',
-            'requiredFile'=>'required|string'
+            'title' => 'required|string',
+            'percent' => 'required|string',
+            'description' => 'required|string',
+            'requiredFile' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $percentAcum = 0;
-        $homeworks = Homework::where('classroom_id',$request->input('classroom_id'))->get();
+        $homeworks = Homework::where('classroom_id', $request->input('classroom_id'))->get();
         foreach ($homeworks as $homework) {
             $percentAcum += $homework->percent;
         }
         $virtualPercent = $percentAcum + $request->input('percent');
         if ($virtualPercent > 100) {
             $freePercent = 100 - $percentAcum;
+
             return redirect('/homeworks/'.$request->input('classroom_id'))->with('PercentHomeworkError', 'Supero el 100%, tiene '.$freePercent.'% para usar');
         }
         $homework = new Homework();

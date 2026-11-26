@@ -14,7 +14,6 @@ class SchoolDeleteController extends Controller
         $school->is_deleted = 1;
         $school->save();
 
-
         return back()->with('deleschoolsuccess', 'Colegio eliminado');
     }
 }

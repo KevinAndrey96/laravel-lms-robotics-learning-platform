@@ -32,6 +32,5 @@ class SchoolSeeder extends Seeder
         $school1->icon_url = 'sdfsdfsfddd';
         $school1->is_enable = 1;
         $school1->save();
-
     }
 }

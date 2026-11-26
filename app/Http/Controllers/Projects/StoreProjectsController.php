@@ -23,15 +23,15 @@ class StoreProjectsController extends Controller
         if ($request->hasFile('themeFile')) {
             $ext = strtolower($request->file('themeFile')->getClientOriginalExtension());
             if ($ext !== 'pdf') {
-                return redirect('/project/creation-type/' . $request->input('subcategory_id'))
+                return redirect('/project/creation-type/'.$request->input('subcategory_id'))
                     ->with('invalidFormat', 'Formato de archivo erróneo');
             }
         }
 
         if ($request->hasFile('image')) {
             $imgExt = strtolower($request->file('image')->getClientOriginalExtension());
-            if (!in_array($imgExt, ['jpg', 'jpeg', 'png', 'webp'])) {
-                return redirect('/project/creation-type/' . $request->input('subcategory_id'))
+            if (! in_array($imgExt, ['jpg', 'jpeg', 'png', 'webp'])) {
+                return redirect('/project/creation-type/'.$request->input('subcategory_id'))
                     ->with('invalidFormat', 'Formato de imagen erróneo');
             }
         }
@@ -52,15 +52,15 @@ class StoreProjectsController extends Controller
         $project->save();
 
         if ($request->hasFile('themeFile')) {
-            $path = $this->mediaService->upload($request->file('themeFile'), 'theme_files', $project->id . '.pdf');
+            $path = $this->mediaService->upload($request->file('themeFile'), 'theme_files', $project->id.'.pdf');
             $project->is_file = 1;
-            $project->description = '/' . ltrim($path, '/');
+            $project->description = '/'.ltrim($path, '/');
             $project->save();
         }
 
         if ($request->hasFile('image')) {
-            $path = $this->mediaService->upload($request->file('image'), 'project_images', $project->id . '.png');
-            $project->icon_url = '/' . ltrim($path, '/');
+            $path = $this->mediaService->upload($request->file('image'), 'project_images', $project->id.'.png');
+            $project->icon_url = '/'.ltrim($path, '/');
             $project->save();
         }
 

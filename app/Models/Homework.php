@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $classroom_id
  * @property mixed $percent
  * @property mixed $requiredFile
+ *
  * @method static where(string $string, mixed $input)
  * @method static find(mixed $input)
  */

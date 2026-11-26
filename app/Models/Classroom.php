@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed|string $code
  * @property int|mixed $user_id
  * @property mixed $school_id
+ *
  * @method static find($id)
  */
 class Classroom extends Model
@@ -20,7 +21,7 @@ class Classroom extends Model
         'code',
         'name',
         'user_id',
-        'school_id'
+        'school_id',
     ];
 
     public function user()
@@ -37,5 +38,4 @@ class Classroom extends Model
     {
         return $this->hasMany(Syllabus::class);
     }
-
 }

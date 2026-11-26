@@ -1,6 +1,7 @@
 <?php
-    $targetDir = Sprintf('storage/%s/', $_POST['path']);
-    $targetFile = Sprintf('%s%s', $targetDir, basename($_FILES["image"]["name"]));
+
+    $targetDir = sprintf('storage/%s/', $_POST['path']);
+    $targetFile = sprintf('%s%s', $targetDir, basename($_FILES['image']['name']));
     $uploadOk = true;
     $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
@@ -37,7 +38,6 @@
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk) {
-        (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) ? $message = "The file " . htmlspecialchars( basename( $_FILES["image"]["name"])) . " has been uploaded." : $message =  'ERROR uploading the file';
+        (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) ? $message = 'The file '.htmlspecialchars(basename($_FILES['image']['name'])).' has been uploaded.' : $message = 'ERROR uploading the file';
         echo $message;
     }
-?>

@@ -11,20 +11,20 @@ class HomeworksUpdateController extends Controller
     public function update(Request $request)
     {
         $fields = [
-            'title'=>'required|string',
-            'percent'=>'required|string',
-            'description'=>'required|string',
-            'requiredFile'=>'required|string'
+            'title' => 'required|string',
+            'percent' => 'required|string',
+            'description' => 'required|string',
+            'requiredFile' => 'required|string',
         ];
         $message = [
-            'required'=>':attribute es requerido',
+            'required' => ':attribute es requerido',
         ];
         $this->validate($request, $fields, $message);
         $homework = Homework::find($request->input('homework_id'));
         $dueDate = $request->input('due_date');
         $dueTime = $request->input('due_time');
         $percentAcum = 0;
-        $homeworks = Homework::where('classroom_id',$request->input('classroom_id'))->get();
+        $homeworks = Homework::where('classroom_id', $request->input('classroom_id'))->get();
         foreach ($homeworks as $value) {
             $percentAcum += $value->percent;
         }
@@ -35,7 +35,7 @@ class HomeworksUpdateController extends Controller
         }
         $homework->title = $request->input('title');
         $homework->description = $request->input('description');
-        $homework->percent= $request->input('percent');
+        $homework->percent = $request->input('percent');
         $homework->requiredFile = $request->input('requiredFile');
         $homework->due_date = $request->input('due_date');
         $homework->due_time = $request->input('due_time');

@@ -35,7 +35,7 @@ class UseCasesServiceProvider extends ServiceProvider
         DeleteTeachersUseCaseInterface::class => DeleteTeachersUseCase::class,
         StoreClassroomsUseCaseInterface::class => StoreClassroomsUseCase::class,
         UpdateClassroomsUseCaseInterface::class => UpdateClassroomsUseCase::class,
-        DeleteClassroomsUseCaseInterface::class => DeleteClassroomsUseCase::class
+        DeleteClassroomsUseCaseInterface::class => DeleteClassroomsUseCase::class,
     ];
 
     public function register()

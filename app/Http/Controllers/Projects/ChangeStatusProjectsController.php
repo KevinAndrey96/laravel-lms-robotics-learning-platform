@@ -13,6 +13,7 @@ class ChangeStatusProjectsController extends Controller
         $project = Project::find($request->input('id'));
         $project->is_enable = $request->input('status');
         $project->save();
+
         return back();
     }
 }

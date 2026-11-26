@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed $id
+ *
  * @method static where(string $string, $id)
  */
 class Subcategory extends Model
@@ -17,7 +18,7 @@ class Subcategory extends Model
         'name',
         'description',
         'icon_url',
-        'category_id'
+        'category_id',
     ];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo

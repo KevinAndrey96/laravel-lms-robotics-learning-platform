@@ -17,7 +17,7 @@ class CoordinatorSeeder extends Seeder
     {
         $user = new User();
         $user->name = 'coordinator';
-        $user->email = 'coordinator@coordinator.com';
+        $user->email = 'coordinator@example.com';
         $user->phone = '5464345';
         $user->password = bcrypt('coordinator');
         $user->role = 'Coordinator';
@@ -31,7 +31,7 @@ class CoordinatorSeeder extends Seeder
 
         $user = new User();
         $user->name = 'Alfonso Gutierrez';
-        $user->email = 'alfonsogu@gmail.com';
+        $user->email = 'alfonsogu@example.com';
         $user->phone = '5464567';
         $user->password = bcrypt('alfonsogu');
         $user->role = 'Coordinator';

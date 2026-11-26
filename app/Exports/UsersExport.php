@@ -6,7 +6,6 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -20,23 +19,20 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet;
 class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumnWidths, WithStyles
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function __construct($id)
     {
         $this->id = $id;
     }
 
-
     public function title(): string
     {
-
         return 'Lista de usuarios';
     }
 
     public function columnWidths(): array
     {
-
         return [
             'A' => 40,
             'B' => 40,
@@ -52,9 +48,8 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
 
     public function styles(Worksheet|\PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet): array
     {
-
         return [
-            1   => ['font' => ['bold' => true], 'alignment' => ['horizontal'=>'center']],
+            1 => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center']],
         ];
     }
 
@@ -62,7 +57,6 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
     {
         if ($this->id == 'coord' || $this->id == 'teach') {
             if (Auth::user()->role == 'Coordinator') {
-
                 return [
                     'NOMBRE',
                     'EMAIL',
@@ -83,7 +77,6 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
         }
         if ($this->id == 'stud') {
             if (Auth::user()->role == 'Coordinator') {
-
                 return [
                     'NOMBRE',
                     'EMAIL',
@@ -106,12 +99,11 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
         }
     }
 
-
     public function collection()
     {
-        $coorTeach = Array();
+        $coorTeach = [];
         $coorTeach = collect($coorTeach);
-        $students = Array();
+        $students = [];
         $students = collect($students);
         $currentUser = User::find(Auth::user()->id);
         if ($this->id == 'coord' || $this->id == 'teach') {
@@ -123,21 +115,21 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
             if ($this->id == 'coord') {
                 foreach ($users as $user) {
                     $asocArray = [
-                        'name'=> $user->name,
-                        'email'=> $user->email,
-                        'phone'=> $user->phone,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
                         'is_enable' => $user->is_enable,
                         'role' => $user->role,
-                        'school' => $user->coordinator->school->name
-                        ];
+                        'school' => $user->coordinator->school->name,
+                    ];
                     $coordinator = json_decode(json_encode($asocArray));
                     $coorTeach->push($coordinator);
                 }
 
-            return $coorTeach;
+                return $coorTeach;
             }
 
-            if ($this->id == "teach") {
+            if ($this->id == 'teach') {
                 if (Auth::user()->role == 'Coordinator') {
                     $school_id = $currentUser->coordinator->school->id;
                     $coorTeachers = Teacher::where('school_id', '=', $school_id)->get();
@@ -149,20 +141,20 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
                 foreach ($users as $user) {
                     if ($currentUser->role == 'Coordinator') {
                         $asocArray = [
-                            'name'=> $user->name,
-                            'email'=> $user->email,
-                            'phone'=> $user->phone,
+                            'name' => $user->name,
+                            'email' => $user->email,
+                            'phone' => $user->phone,
                             'is_enable' => $user->is_enable,
-                            'role' => $user->role
+                            'role' => $user->role,
                         ];
                     } else {
                         $asocArray = [
-                            'name'=> $user->name,
-                            'email'=> $user->email,
-                            'phone'=> $user->phone,
+                            'name' => $user->name,
+                            'email' => $user->email,
+                            'phone' => $user->phone,
                             'is_enable' => $user->is_enable,
                             'role' => $user->role,
-                            'school' => $user->teacher->school->name
+                            'school' => $user->teacher->school->name,
                         ];
                     }
                     $teacher = json_decode(json_encode($asocArray));
@@ -172,7 +164,7 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
                 return $coorTeach;
             }
         }
-        if ($this->id == "stud") {
+        if ($this->id == 'stud') {
             $users = User::where('role', 'like', 'Student')->get();
             if (Auth::user()->role == 'Coordinator') {
                 $school_id = $currentUser->coordinator->school->id;
@@ -183,29 +175,29 @@ class UsersExport implements FromCollection, WithHeadings, WithTitle, WithColumn
                 }
             }
             foreach ($users as $user) {
-                if (isset($user->student->classroom)){
+                if (isset($user->student->classroom)) {
                     $className = $user->student->classroom->name;
                 } else {
                     $className = '';
                 }
                 if ($currentUser->role == 'Coordinator') {
                     $asocArray = [
-                        'name'=> $user->name,
-                        'email'=> $user->email,
-                        'phone'=> $user->phone,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
                         'is_enable' => $user->is_enable,
                         'role' => $user->role,
-                        'classroom' => $className
+                        'classroom' => $className,
                     ];
                 } else {
                     $asocArray = [
-                        'name'=> $user->name,
-                        'email'=> $user->email,
-                        'phone'=> $user->phone,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
                         'is_enable' => $user->is_enable,
                         'role' => $user->role,
                         'school' => $user->student->school->name,
-                        'classroom' => $className
+                        'classroom' => $className,
                     ];
                 }
                 $student = json_decode(json_encode($asocArray));

@@ -14,6 +14,7 @@ class ClassroomRepository implements ClassroomRepositoryInterface
         $classroom->code = $code;
         $classroom->user_id = $user_id;
         $classroom->save();
+
         return true;
     }
 
@@ -24,6 +25,7 @@ class ClassroomRepository implements ClassroomRepositoryInterface
         $classroom->code = $code;
         $classroom->user_id = $user_id;
         $classroom->save();
+
         return true;
     }
 }

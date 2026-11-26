@@ -11,7 +11,7 @@ class CategoriesDeleteController extends Controller
     public function delete(Request $request)
     {
         Category::destroy($request->input('category_id'));
-        return back()->with('delecategosuccess','Categoría eliminada');
 
+        return back()->with('delecategosuccess', 'Categoría eliminada');
     }
 }

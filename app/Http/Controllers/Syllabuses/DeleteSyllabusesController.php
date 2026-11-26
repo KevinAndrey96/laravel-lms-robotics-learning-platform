@@ -16,6 +16,5 @@ class DeleteSyllabusesController extends Controller
         }
 
         return back()->with('DeleteSyllabusSuccess', 'Plan de estudios eliminado');
-
     }
 }

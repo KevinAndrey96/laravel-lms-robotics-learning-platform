@@ -38,7 +38,7 @@ class SchoolUpdateController extends Controller
         $school->country = $request->input('country');
 
         if ($request->hasFile('icon_url')) {
-            $school->icon_url = $this->mediaService->upload($request->file('icon_url'), 'school_logos', $school->id . '.png');
+            $school->icon_url = $this->mediaService->upload($request->file('icon_url'), 'school_logos', $school->id.'.png');
         }
 
         $school->save();
