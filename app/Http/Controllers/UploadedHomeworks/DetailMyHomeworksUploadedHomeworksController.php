@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class DetailMyHomeworksUploadedHomeworksController extends Controller
 {
-    public function detailMyHomework($id)
+    public function detailMyHomework(Request $request, $id)
     {
         date_default_timezone_set('America/Bogota');
-        $uploadedHomework = Uploaded_homework::find($id);
+        $uploadedHomework = Uploaded_homework::where('user_id', $request->user()->id)->findOrFail($id);
         $homework = $uploadedHomework->homework;
         $dateTime = Carbon::parse($uploadedHomework->homework->due_date.' '.$uploadedHomework->homework->due_time);
         $currentDateTime = Carbon::now();

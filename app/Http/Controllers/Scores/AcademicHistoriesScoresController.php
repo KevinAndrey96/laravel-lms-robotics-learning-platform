@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 
 class AcademicHistoriesScoresController extends Controller
 {
-    public function academicHistories($id)
+    public function academicHistories(Request $request, $id)
     {
-        $academicHistories = AcademicHistory::where('user_id', $id)->get();
-        $user = User::find($id);
+        $viewer = $request->user();
+        abort_if($viewer->hasRole('Student') && (int) $id !== $viewer->id, 403);
+
+        $user = User::findOrFail($id);
+        $academicHistories = AcademicHistory::where('user_id', $user->id)->get();
 
         return view('scores.academicHistories', compact('academicHistories', 'user'));
     }

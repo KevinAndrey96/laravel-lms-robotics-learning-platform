@@ -29,11 +29,12 @@ class UploadMyHomeworkUploadedHomeworksController extends Controller
         $extension = strtolower($file->getClientOriginalExtension());
         $allowedExtensions = ['pdf', 'docx', 'zip', 'rar', 'png', 'jpg'];
 
-        if (!in_array($extension, $allowedExtensions)) {
+        if (! in_array($extension, $allowedExtensions)) {
             return back()->with('extensionError', 'Archivo con extensión no permitida (permitidos: PDF, DOCX, ZIP, PNG, JPG)');
         }
 
-        $uploadedHomework = Uploaded_homework::findOrFail($request->input('uploadedHomework_id'));
+        $uploadedHomework = Uploaded_homework::where('user_id', $request->user()->id)
+            ->findOrFail($request->input('uploadedHomework_id'));
 
         $path = $this->mediaService->upload($file, 'homework_files');
 
